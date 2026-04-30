@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaaSy Momentum — We GSD So You Don't Have To</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #FAFAF8;
+    --surface:      #FFFFFF;
+    --card:         #F5F3F0;
+    --dark:         #0A0A0A;
+    --body:         #1A1A1A;
+    --muted:        #6B6B6B;
+    --border:       rgba(0,0,0,0.08);
+    --pink:         #F4547A;
+    --pink-light:   #FDE8EE;
+    --purple:       #6B35C8;
+    --purple-light: #EDE5FF;
+    --purple-dark:  #4A1A9E;
+    --orange:       #FF6B2B;
+    --orange-light: #FFF0E8;
+    --sf-grad:      linear-gradient(135deg, #F4547A, #6B35C8);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--body);overflow-x:hidden;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(250,250,248,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+  .nav-logo{display:flex;align-items:center;gap:0.6rem;}
+  .nav-mark{width:32px;height:32px;border-radius:8px;background:var(--sf-grad);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:white;}
+  .nav-word{font-size:0.92rem;font-weight:700;color:var(--dark);}
+  .nav-word span{color:var(--pink);}
+  .nav-ctas{display:flex;gap:0.8rem;align-items:center;}
+  .btn-ghost{font-size:0.84rem;font-weight:500;color:var(--muted);text-decoration:none;padding:0.5rem 1.1rem;border:1.5px solid var(--border);border-radius:100px;transition:all .2s;}
+  .btn-ghost:hover{color:var(--dark);border-color:rgba(0,0,0,0.2);}
+  .btn-p{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.84rem;font-weight:600;color:white;text-decoration:none;padding:0.55rem 1.4rem;border-radius:100px;background:var(--sf-grad);border:none;transition:all .25s;cursor:pointer;}
+  .btn-p:hover{opacity:0.85;transform:translateY(-1px);}
+  .btn-s{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.84rem;font-weight:500;color:var(--purple);text-decoration:none;padding:0.55rem 1.4rem;border-radius:100px;background:var(--purple-light);border:none;transition:all .25s;cursor:pointer;}
+  .btn-s:hover{background:#e0d4ff;transform:translateY(-1px);}
+
+  /* HERO */
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:72px;overflow:hidden;}
+  .hero-l{display:flex;flex-direction:column;justify-content:center;padding:5rem 3.5rem 5rem 4.5rem;}
+  .eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:1.5rem;}
+  .eyebrow::before{content:'';width:20px;height:1.5px;background:var(--sf-grad);border-radius:2px;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,4vw,3.8rem);font-weight:900;line-height:1.1;letter-spacing:-.03em;color:var(--dark);margin-bottom:.8rem;}
+  h1 em,h2 em{font-style:italic;background:var(--sf-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .tagline{font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);margin-bottom:1.8rem;}
+  .hero-sub{font-size:1rem;line-height:1.75;color:var(--muted);max-width:460px;margin-bottom:2rem;}
+  .hero-sub strong{color:var(--body);font-weight:600;}
+  .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;}
+  .pill{font-size:.77rem;font-weight:500;padding:.35rem .9rem;border-radius:100px;border:1.5px solid var(--border);color:var(--muted);background:var(--surface);}
+  .pill.pi{background:var(--pink-light);color:var(--pink);border-color:transparent;}
+  .pill.pu{background:var(--purple-light);color:var(--purple);border-color:transparent;}
+  .pill.or{background:var(--orange-light);color:var(--orange);border-color:transparent;}
+  .ctas{display:flex;gap:.8rem;flex-wrap:wrap;}
+  .ctas .btn-p,.ctas .btn-s{font-size:.92rem;padding:.8rem 2rem;}
+  .hero-r{position:relative;overflow:hidden;}
+  .hero-r img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--bg) 0%,transparent 18%);z-index:1;}
+  .hero-badge{position:absolute;bottom:2.5rem;left:1.5rem;z-index:3;background:white;border-radius:1rem;padding:1.2rem 1.4rem;box-shadow:0 8px 40px rgba(107,53,200,.15);border:1px solid var(--purple-light);max-width:200px;}
+  .badge-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;background:var(--sf-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+  .badge-lbl{font-size:.73rem;color:var(--muted);margin-top:.3rem;line-height:1.4;}
+
+  /* MARQUEE */
+  .mq{background:var(--dark);padding:.85rem 0;overflow:hidden;}
+  .mq-track{display:flex;gap:2.5rem;animation:mq 30s linear infinite;white-space:nowrap;}
+  .mq-item{display:inline-flex;align-items:center;gap:.6rem;font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);flex-shrink:0;}
+  .mq-item .d{color:var(--pink);}
+  @keyframes mq{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+  /* SHARED */
+  section{padding:6rem 4.5rem;}
+  .lbl{display:inline-flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:1rem;}
+  .lbl::before{content:'';width:18px;height:1.5px;background:var(--sf-grad);border-radius:2px;}
+  h2{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3vw,2.8rem);font-weight:900;line-height:1.12;letter-spacing:-.03em;color:var(--dark);margin-bottom:1.3rem;}
+  .blg{font-size:1rem;line-height:1.75;color:var(--muted);max-width:600px;}
+  .blg strong{color:var(--body);font-weight:600;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+  .rnd{border-radius:1.5rem;overflow:hidden;}
+  .rnd img{width:100%;height:100%;object-fit:cover;display:block;}
+  .port{aspect-ratio:4/5;}
+  .land{aspect-ratio:16/9;}
+  .cr{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem;}
+  .cr .btn-p,.cr .btn-s{font-size:.9rem;padding:.75rem 1.8rem;}
+
+  /* PROBLEM */
+  .prob{background:var(--surface);}
+  .pq{margin-top:1.5rem;padding:1.2rem 1.5rem;border-left:3px solid var(--pink);background:var(--pink-light);border-radius:0 .8rem .8rem 0;}
+  .pq p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--body);line-height:1.5;}
+  .pq cite{display:block;margin-top:.4rem;font-size:.73rem;color:var(--pink);font-style:normal;font-family:'DM Mono',monospace;letter-spacing:.06em;text-transform:uppercase;}
+  .sf-tag{display:inline-flex;align-items:center;gap:.4rem;margin-top:1.5rem;padding:.5rem 1rem;border-radius:100px;background:var(--sf-grad);font-size:.8rem;font-weight:700;color:white;}
+
+  /* IDEA */
+  .idea{background:var(--dark);}
+  .idea .lbl{color:var(--orange);}
+  .idea .lbl::before{background:var(--orange);}
+  .idea h2{color:white;}
+  .idea .blg{color:rgba(255,255,255,.55);}
+  .idea .blg strong{color:white;}
+  .cc{margin-top:1.8rem;padding:1.4rem 1.6rem;border:1px solid rgba(244,84,122,.25);border-radius:1rem;background:rgba(244,84,122,.05);}
+  .cc p{font-size:.9rem;line-height:1.7;color:rgba(255,255,255,.6);}
+  .cc p em{color:var(--pink);font-style:italic;}
+  .idea .btn-s{background:rgba(107,53,200,.15);color:rgba(255,255,255,.6);}
+  .idea .btn-s:hover{background:rgba(107,53,200,.25);color:white;}
+
+  /* WHAT YOU GET */
+  .get{background:var(--bg);}
+  .get-intro{max-width:700px;margin-bottom:3rem;}
+  .gg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+  .gc{background:var(--surface);border:1.5px solid var(--border);border-radius:1.2rem;padding:1.8rem;transition:all .2s;}
+  .gc:hover{border-color:var(--pink);box-shadow:0 4px 24px rgba(244,84,122,.08);transform:translateY(-2px);}
+  .gc.sp{grid-column:span 3;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;background:var(--dark);border-color:transparent;padding:2.5rem;}
+  .gi{font-size:1.8rem;margin-bottom:1rem;}
+  .gc h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:.6rem;line-height:1.3;}
+  .gc.sp h3{color:white;font-size:1.5rem;}
+  .gc p{font-size:.87rem;line-height:1.65;color:var(--muted);}
+  .gc.sp p{color:rgba(255,255,255,.6);font-size:.9rem;}
+  .bl{list-style:none;margin-top:1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+  .bl li{font-size:.84rem;color:rgba(255,255,255,.7);display:flex;align-items:flex-start;gap:.5rem;line-height:1.4;}
+  .bl li::before{content:'→';color:var(--pink);font-weight:700;flex-shrink:0;}
+  .gfi{border-radius:1rem;overflow:hidden;aspect-ratio:16/10;}
+  .gfi img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* TEMPLATES */
+  .tpls{background:var(--surface);}
+  .tpls-top{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:2.5rem;}
+  .ptag{display:inline-flex;align-items:baseline;gap:.5rem;margin-top:.8rem;}
+  .pw{font-size:1rem;color:var(--muted);text-decoration:line-through;}
+  .pn{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;background:var(--sf-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .pnote{font-size:.78rem;color:var(--muted);}
+  .tg{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+  .tt{border-radius:.8rem;overflow:hidden;aspect-ratio:3/4;border:1.5px solid var(--border);transition:all .25s;}
+  .tt:hover{transform:scale(1.02) translateY(-3px);box-shadow:0 8px 32px rgba(107,53,200,.15);border-color:var(--purple);}
+  .tt img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* AI STUDIO */
+  .ais{background:var(--dark);}
+  .ais .lbl{color:var(--purple);}
+  .ais .lbl::before{background:var(--purple);}
+  .ais h2{color:white;}
+  .ais .blg{color:rgba(255,255,255,.55);}
+  .ais .blg strong{color:white;}
+  .ss{margin-top:1.8rem;display:flex;flex-direction:column;gap:.8rem;}
+  .ss-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.2rem;border:1px solid rgba(255,255,255,.06);border-radius:.8rem;background:rgba(255,255,255,.02);transition:all .2s;}
+  .ss-item:hover{border-color:rgba(107,53,200,.3);background:rgba(107,53,200,.05);}
+  .sn{font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;width:26px;height:26px;border-radius:50%;background:var(--sf-grad);color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .ss-item p{font-size:.87rem;color:rgba(255,255,255,.55);line-height:1.5;}
+  .ss-item p strong{color:white;}
+  .ais .btn-s{background:rgba(107,53,200,.15);color:rgba(255,255,255,.6);}
+  .ais .btn-s:hover{background:rgba(107,53,200,.25);color:white;}
+
+  /* PRICE */
+  .prc{background:var(--bg);}
+  .pc{background:var(--surface);border:1.5px solid var(--border);border-radius:2rem;padding:2.8rem;position:relative;overflow:hidden;}
+  .pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sf-grad);}
+  .pm{display:flex;align-items:baseline;gap:.3rem;margin:1rem 0 .3rem;}
+  .pd{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;background:var(--sf-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+  .pp{font-size:.86rem;color:var(--muted);}
+  .ps{display:flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.08em;color:var(--muted);margin-bottom:1.5rem;}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--pink);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .pg{padding:1rem 1.2rem;background:var(--purple-light);border-radius:.8rem;font-size:.85rem;color:var(--body);line-height:1.6;margin-bottom:1.5rem;}
+  .pg strong{color:var(--purple);}
+  .pctas{display:flex;flex-direction:column;gap:.7rem;}
+  .pctas .btn-p,.pctas .btn-s{justify-content:center;font-size:.9rem;padding:.85rem;}
+  .cmmt{padding:2.5rem;background:var(--card);border-radius:1.5rem;}
+  .cmmt h3{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--dark);margin-bottom:1rem;line-height:1.3;}
+  .cmmt p{font-size:.9rem;line-height:1.7;color:var(--muted);margin-bottom:.8rem;}
+  .cmmt p strong{color:var(--body);}
+  .ci{margin-top:1.5rem;border-radius:1rem;overflow:hidden;aspect-ratio:16/9;}
+  .ci img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* QUEUE */
+  .que{background:var(--purple);}
+  .que .lbl{color:rgba(255,255,255,.45);}
+  .que .lbl::before{background:rgba(255,255,255,.3);}
+  .que h2{color:white;}
+  .que h2 em{background:linear-gradient(135deg,#FFB3C6,#FF6B2B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .que .blg{color:rgba(255,255,255,.65);}
+  .qs{margin-top:2rem;display:flex;flex-direction:column;gap:0;}
+  .qi{display:flex;gap:1.2rem;padding-bottom:1.4rem;position:relative;}
+  .qi:not(:last-child)::after{content:'';position:absolute;left:13px;top:28px;bottom:0;width:1px;background:rgba(255,255,255,.15);}
+  .qn{font-family:'DM Mono',monospace;font-size:.68rem;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:white;flex-shrink:0;}
+  .qi h4{font-size:.88rem;font-weight:600;color:white;margin-bottom:.2rem;}
+  .qi p{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.5;}
+  .que .btn-p{background:white;color:var(--purple);}
+  .que .btn-p:hover{background:#f0e8ff;}
+  .que .btn-s{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);}
+  .que .btn-s:hover{background:rgba(255,255,255,.18);color:white;}
+
+  /* FOR */
+  .for{background:var(--surface);}
+  .fl{margin-top:2rem;display:flex;flex-direction:column;gap:.8rem;}
+  .fi{display:flex;gap:.9rem;align-items:flex-start;padding:1rem 1.2rem;border-radius:.8rem;border:1.5px solid var(--border);background:var(--bg);transition:all .2s;}
+  .fi:hover{border-color:var(--purple);background:var(--purple-light);}
+  .fc{width:20px;height:20px;border-radius:50%;background:var(--sf-grad);color:white;display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0;margin-top:1px;}
+  .fi p{font-size:.87rem;line-height:1.55;color:var(--muted);}
+  .nfb{margin-top:1.5rem;padding:1.2rem 1.5rem;border:1.5px solid var(--border);border-radius:1rem;background:var(--orange-light);}
+  .nfb h4{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:.4rem;}
+  .nfb p{font-size:.85rem;color:var(--muted);line-height:1.6;}
+  .fimgs{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .fim{border-radius:1rem;overflow:hidden;aspect-ratio:3/4;}
+  .fim.w{grid-column:span 2;aspect-ratio:16/8;}
+  .fim img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* NOT */
+  .not{background:var(--dark);}
+  .not .lbl{color:var(--orange);}
+  .not .lbl::before{background:var(--orange);}
+  .not h2{color:white;}
+  .not .blg{color:rgba(255,255,255,.55);}
+  .not .blg strong{color:white;}
+  .ng{margin-top:1.8rem;display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+  .ni{display:flex;align-items:flex-start;gap:.8rem;padding:1rem 1.2rem;border:1px solid rgba(255,107,43,.15);border-radius:.8rem;background:rgba(255,107,43,.04);}
+  .nx{color:var(--orange);font-size:1rem;flex-shrink:0;margin-top:1px;}
+  .ni p{font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.5;}
+  .ni p strong{color:rgba(255,255,255,.85);}
+  .nimg{border-radius:1.5rem;overflow:hidden;aspect-ratio:4/5;}
+  .nimg img{width:100%;height:100%;object-fit:cover;display:block;}
+  .not .btn-s{background:rgba(255,107,43,.12);color:rgba(255,255,255,.6);}
+  .not .btn-s:hover{background:rgba(255,107,43,.2);color:white;}
+
+  /* FAQ */
+  .faq{background:var(--bg);}
+  .fg{margin-top:3rem;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1.5px solid var(--border);border-radius:1.5rem;overflow:hidden;}
+  .fq{background:var(--surface);padding:1.8rem 2rem;}
+  .fq h4{font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:.5rem;line-height:1.4;}
+  .fq p{font-size:.85rem;color:var(--muted);line-height:1.65;}
+
+  /* CLOSE */
+  .cls{background:var(--dark);text-align:center;padding:8rem 4.5rem;position:relative;overflow:hidden;}
+  .clbg{position:absolute;inset:0;opacity:.07;}
+  .clbg img{width:100%;height:100%;object-fit:cover;}
+  .cli{position:relative;z-index:2;max-width:680px;margin:0 auto;}
+  .cls h2{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:900;color:white;line-height:1.1;margin-bottom:1.5rem;}
+  .cls h2 em{font-style:italic;background:var(--sf-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .cls p{font-size:1rem;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:2.5rem;max-width:520px;margin-left:auto;margin-right:auto;}
+  .clctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+  .clctas .btn-p{font-size:1rem;padding:1rem 2.5rem;}
+  .clctas .btn-s{font-size:1rem;padding:1rem 2.5rem;background:rgba(107,53,200,.15);color:rgba(255,255,255,.6);}
+  .clctas .btn-s:hover{background:rgba(107,53,200,.25);color:white;}
+  .clmeta{margin-top:3rem;font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.2);}
+
+  /* FOOTER */
+  footer{background:#070707;padding:1.8rem 4.5rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.04);}
+  .flogo{display:flex;align-items:center;gap:.5rem;}
+  .fm{width:24px;height:24px;border-radius:6px;background:var(--sf-grad);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.75rem;font-weight:900;color:white;}
+  .flogo span,.footer-links{font-size:.78rem;color:rgba(255,255,255,.25);}
+
+  /* ANIMATIONS */
+  @keyframes fu{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  .eyebrow{animation:fu .5s ease both;}
+  h1{animation:fu .5s .08s ease both;}
+  .tagline{animation:fu .5s .16s ease both;}
+  .hero-sub{animation:fu .5s .24s ease both;}
+  .pills{animation:fu .5s .32s ease both;}
+  .ctas{animation:fu .5s .4s ease both;}
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    nav{padding:1rem 1.5rem;}
+    section{padding:4rem 1.5rem;}
+    .hero{grid-template-columns:1fr;min-height:auto;}
+    .hero-l{padding:5rem 1.5rem 3rem;}
+    .hero-r{height:60vw;}
+    .hero-overlay{background:linear-gradient(to bottom,var(--bg) 0%,transparent 25%);}
+    .two{grid-template-columns:1fr;gap:2.5rem;}
+    .gg{grid-template-columns:1fr;}
+    .gc.sp{grid-column:span 1;grid-template-columns:1fr;}
+    .tg{grid-template-columns:repeat(2,1fr);}
+    .tpls-top{grid-template-columns:1fr;gap:1rem;}
+    .fg{grid-template-columns:1fr;}
+    .ng{grid-template-columns:1fr;}
+    .fimgs{grid-template-columns:1fr;}
+    .fim.w{grid-column:span 1;}
+    .cls{padding:5rem 1.5rem;}
+    footer{flex-direction:column;gap:1rem;padding:1.5rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-mark">S</div>
+    <div class="nav-word">SaaSy <span>Funnels</span></div>
+  </div>
+  <div class="nav-ctas">
+    <a href="#chat" class="btn-ghost">Chat with Meg</a>
+    <a href="#apply" class="btn-p">Grab Your Spot →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-l">
+    <div class="eyebrow">For Kajabi Creators</div>
+    <h1>Your Kajabi business,<br><em>beautifully built.</em><br>Every single month.</h1>
+    <div class="tagline">SaaSy Momentum · We GSD So You Don't Have To</div>
+    <p class="hero-sub">While every other freelancer and agency is putting their prices up, we've made the decision to go the other way. <strong>Unlimited done-for-you Kajabi support, in a queue, with no monthly cap and no agency markup.</strong></p>
+    <div class="pills">
+      <span class="pill pi">10 spots only</span>
+      <span class="pill pu">$497/month</span>
+      <span class="pill or">No application</span>
+      <span class="pill">Cancel anytime</span>
+    </div>
+    <div class="ctas">
+      <a href="#apply" class="btn-p">Grab Your Spot →</a>
+      <a href="#chat" class="btn-s">Chat with Meg</a>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div class="hero-overlay"></div>
+    <img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698b0d2b7305aa68e6256def.jpg" alt="Meg Burrage — SaaSy Funnels" loading="eager">
+    <div class="hero-badge">
+      <div class="badge-num">12mo</div>
+      <div class="badge-lbl">Guaranteed. Even if it costs us.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mq-track">
+    <span class="mq-item">Funnel Builds <span class="d">✦</span></span>
+    <span class="mq-item">Course Setups <span class="d">✦</span></span>
+    <span class="mq-item">Membership Builds <span class="d">✦</span></span>
+    <span class="mq-item">Email Sequences <span class="d">✦</span></span>
+    <span class="mq-item">Landing Pages <span class="d">✦</span></span>
+    <span class="mq-item">Branded Checkouts <span class="d">✦</span></span>
+    <span class="mq-item">Automations <span class="d">✦</span></span>
+    <span class="mq-item">Webinar Funnels <span class="d">✦</span></span>
+    <span class="mq-item">Community Builds <span class="d">✦</span></span>
+    <span class="mq-item">Funnel Builds <span class="d">✦</span></span>
+    <span class="mq-item">Course Setups <span class="d">✦</span></span>
+    <span class="mq-item">Membership Builds <span class="d">✦</span></span>
+    <span class="mq-item">Email Sequences <span class="d">✦</span></span>
+    <span class="mq-item">Landing Pages <span class="d">✦</span></span>
+    <span class="mq-item">Branded Checkouts <span class="d">✦</span></span>
+    <span class="mq-item">Automations <span class="d">✦</span></span>
+    <span class="mq-item">Webinar Funnels <span class="d">✦</span></span>
+    <span class="mq-item">Community Builds <span class="d">✦</span></span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="prob">
+  <div class="two">
+    <div class="rnd port" style="position:relative;">
+      <img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698c7d74cc5317531245705f.jpg" alt="Kajabi creator">
+      <div class="pq">
+        <p>"The funnel that was supposed to launch last quarter. The product that's 80% done for months…"</p>
+        <cite>Sound familiar?</cite>
+      </div>
+    </div>
+    <div>
+      <div class="lbl">The Problem</div>
+      <h2>You already know what you want to <em>build.</em></h2>
+      <p class="blg">The offers are mapped out. The content is ready, or nearly there. You can picture exactly where your Kajabi business is headed — funnels live, products selling, automations running quietly in the background doing their job.</p>
+      <br>
+      <p class="blg">The only thing standing between you and that version of your business is the time it takes to <strong>actually build it all.</strong></p>
+      <br>
+      <p class="blg">When the tech is left to you, great ideas move slowly. Every week that the building sits on your to-do list is another week your ideas aren't out in the world working for you.</p>
+      <div class="sf-tag">SaaSy Momentum exists to fix exactly that ✦</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE IDEA -->
+<section class="idea">
+  <div class="two">
+    <div>
+      <div class="lbl">The Idea</div>
+      <h2>While everyone else goes up,<br><em>we went down.</em></h2>
+      <p class="blg">Year on year, the cost of good help goes up. Designers, developers, funnel builders — rates climb, retainers grow, and the gap between "doing it yourself" and "getting proper help" gets wider.</p>
+      <br>
+      <p class="blg">We've made the decision to go the other direction. By leveraging the best AI tools available — <strong>seriously invested in, not bolted on as an afterthought</strong> — we can build more, build faster, and build beautifully. And we're passing every bit of that efficiency directly on to you.</p>
+      <div class="cc">
+        <p>I pay my own coach <em>thousands a month</em> to tell me what to do — and what not to do. He would definitely say no to this one. So let's just keep it between us. 🤫<br><br>Gotta wonder why I bother paying him if I'm not going to do what I'm told 😂</p>
+      </div>
+      <div class="cr">
+        <a href="#apply" class="btn-p">Grab Your Spot →</a>
+        <a href="#chat" class="btn-s">Chat with Meg</a>
+      </div>
+    </div>
+    <div class="rnd port">
+      <img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698b0daea41b875431409bad.jpg" alt="Meg Burrage">
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="get">
+  <div class="get-intro">
+    <div class="lbl">What You Get</div>
+    <h2>Submit. Queue. Done. <em>On repeat.</em></h2>
+    <p class="blg">Drop us a Google Doc telling us what you need — the vision, the details, the vibe — and it goes straight into the queue. No lengthy briefing calls. No back-and-forth. Small tasks move fast. Larger builds get a 21-day turnaround. <strong>No monthly cap. No overage fees. Submit as much as you need.</strong></p>
+  </div>
+  <div class="gg">
+    <div class="gc sp">
+      <div>
+        <div class="gi">🛠️</div>
+        <h3>Unlimited Asset Builds — In Your Queue</h3>
+        <p>Submit a Google Doc. We build it. Pages, automations, and branded checkout included on every funnel build. Delivered, not just designed.</p>
+        <ul class="bl">
+          <li>Complete launch funnels — opt-in, sales page, checkout, thank you</li>
+          <li>New courses or products set up inside Kajabi, ready for students</li>
+          <li>Community and membership builds</li>
+          <li>Standalone webpages and landing pages</li>
+          <li>Webinar and freebie funnels</li>
+          <li>Workflows, automations, branded email sequences</li>
+        </ul>
+      </div>
+      <div class="gfi">
+        <img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698b2c9a868215be144e7377.jpg" alt="SaaSy Funnels builds">
+      </div>
+    </div>
+    <div class="gc">
+      <div class="gi">🎨</div>
+      <h3>Unlimited SaaSy Funnels Templates</h3>
+      <p>Every template in our Kajabi library — normally <strong>$697 each</strong> — yours to use without limit for as long as you're a member.</p>
+    </div>
+    <div class="gc">
+      <div class="gi">🤖</div>
+      <h3>Your Own AI Studio Access</h3>
+      <p>Prompt your way to a bespoke page design. Find the one you love, grab the share link, drop it in your Google Doc with "build this please" — and we bring it to life.</p>
+    </div>
+    <div class="gc">
+      <div class="gi">📋</div>
+      <h3>Google Doc Briefs. That's It.</h3>
+      <p>No complex systems. No calls before we start. Fill in our simple Google Doc template, drop it in, and we handle the rest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section class="tpls">
+  <div class="tpls-top">
+    <div>
+      <div class="lbl">Templates</div>
+      <h2>$697 templates.<br><em>Yours without limit.</em></h2>
+    </div>
+    <div>
+      <p class="blg" style="font-size:.92rem;">Every template in the SaaSy Funnels Kajabi library is included with your membership — use as many as you like, as often as you need, for as long as you're a member.</p>
+      <div class="ptag">
+        <span class="pw">$697 each</span>
+        <span style="color:var(--muted);">→</span>
+        <span class="pn">Unlimited</span>
+        <span class="pnote">as a member</span>
+      </div>
+    </div>
+  </div>
+  <div class="tg">
+    <div class="tt"><img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698c66e87f6dcf1eea0c61d3.png" alt="Template"></div>
+    <div class="tt"><img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698c670e2cab4a40a249b25b.png" alt="Template"></div>
+    <div class="tt"><img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698c67337f6dcf13c10c8295.png" alt="Template"></div>
+    <div class="tt"><img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698c6767017707ef54ce5278.png" alt="Template"></div>
+    <div class="tt"><img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698c678c52c952cbcdfb4987.png" alt="Template"></div>
+  </div>
+</section>
+
+<!-- AI STUDIO -->
+<section class="ais">
+  <div class="two">
+    <div class="rnd port">
+      <img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698c536d01770772a5cafa7f.png" alt="AI Studio">
+    </div>
+    <div>
+      <div class="lbl">AI Studio</div>
+      <h2>Don't love our templates?<br><em>Design your own.</em></h2>
+      <p class="blg">Your own AI Studio access is included. Prompt your way to a completely bespoke landing page, website, or funnel — <strong>no design skills needed.</strong></p>
+      <div class="ss">
+        <div class="ss-item"><div class="sn">1</div><p><strong>Open AI Studio</strong> — type in your vision, your brand, your vibe.</p></div>
+        <div class="ss-item"><div class="sn">2</div><p><strong>Browse the generated designs</strong> — find the one that makes you say yes.</p></div>
+        <div class="ss-item"><div class="sn">3</div><p><strong>Grab the share link</strong> — drop it in your Google Doc with "build this please."</p></div>
+        <div class="ss-item"><div class="sn">4</div><p><strong>We bring it to life</strong> — fully built inside Kajabi, branded and ready to launch.</p></div>
+      </div>
+      <div class="cr">
+        <a href="#apply" class="btn-p">Grab Your Spot →</a>
+        <a href="#chat" class="btn-s">Chat with Meg</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="prc">
+  <div class="lbl">Pricing</div>
+  <h2 style="margin-bottom:3rem;">Committed for a year.<br><em>You don't have to be.</em></h2>
+  <div class="two" style="align-items:start;">
+    <div class="pc">
+      <div class="lbl" style="margin-bottom:.5rem;">SaaSy Momentum</div>
+      <div class="pm">
+        <span class="pd">$497</span>
+        <span class="pp">/month USD</span>
+      </div>
+      <div class="ps"><div class="dot"></div>10 spots only — first come, first served</div>
+      <div class="pg"><strong>Our 12-month guarantee:</strong> We're committed to running SaaSy Momentum exactly as described for a minimum of one full year. No exceptions. No watered-down version. No quiet disappearing act.</div>
+      <div class="pctas" id="apply">
+        <a href="#" class="btn-p">Grab Your Spot →</a>
+        <a href="#chat" class="btn-s" id="chat">Not sure? Chat with Meg</a>
+      </div>
+    </div>
+    <div class="cmmt">
+      <h3>We're committed to a year.<br>You don't have to be.</h3>
+      <p>You could join for a <strong>single month.</strong> Get your preferred template, have us build the asset you've been putting off, and cancel if you want to.</p>
+      <p>We'd obviously love to keep you — and we think once you see what lands in your Kajabi account that first month, you'll want to stay. But there's no lock-in, no penalty, no awkward cancellation process.</p>
+      <p><strong>Stay for one month or stay for twelve. The door swings both ways.</strong></p>
+      <div class="ci">
+        <img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698c0f8852c952649bedef3a.jpg" alt="SaaSy Funnels team">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUEUE -->
+<section class="que">
+  <div class="two">
+    <div>
+      <div class="lbl">How It Works</div>
+      <h2>Yes, there's a queue.<br><em>Here's why that's a good thing.</em></h2>
+      <p class="blg">We cap this at 10 members — not because we can't handle more, but because every person in SaaSy Momentum deserves real attention, not a rushed turnaround because we've overcommitted. The queue means your work moves in order, consistently, with a clear 21-day turnaround on larger builds so you can plan your launches around it.</p>
+      <div class="qs">
+        <div class="qi"><div class="qn">1</div><div><h4>Grab your spot</h4><p>No application. First come, first served. 10 spots only.</p></div></div>
+        <div class="qi"><div class="qn">2</div><div><h4>Get set up</h4><p>We onboard you, get your branding sorted, and you're ready to submit.</p></div></div>
+        <div class="qi"><div class="qn">3</div><div><h4>Drop us a Google Doc</h4><p>Vision, details, brand assets. Into the queue it goes.</p></div></div>
+        <div class="qi"><div class="qn">4</div><div><h4>We build it</h4><p>Small tasks move quickly. Larger builds deliver within 21 days.</p></div></div>
+        <div class="qi"><div class="qn">5</div><div><h4>Submit the next one</h4><p>No cap, no limit. Keep the list coming and we'll keep working through it.</p></div></div>
+      </div>
+      <div class="cr">
+        <a href="#apply" class="btn-p">Grab Your Spot →</a>
+        <a href="#chat" class="btn-s">Chat with Meg</a>
+      </div>
+    </div>
+    <div class="rnd port">
+      <img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698c192a017707504cc25131.jpg" alt="SaaSy Funnels workspace">
+    </div>
+  </div>
+</section>
+
+<!-- FOR -->
+<section class="for">
+  <div class="two">
+    <div>
+      <div class="lbl">Who It's For</div>
+      <h2>Big plans for the next 12 months.<br><em>Let's actually GSD.</em></h2>
+      <p class="blg">This is for the Kajabi creator who isn't short on ideas — you're short on time to execute them. You already know what you want to launch. You just need someone to take the building off your hands so your ideas move at the speed they deserve.</p>
+      <div class="fl">
+        <div class="fi"><div class="fc">✓</div><p>You have multiple offers to launch in the next 12 months and the tech is the bottleneck</p></div>
+        <div class="fi"><div class="fc">✓</div><p>You're done with half-built funnels living permanently on your to-do list</p></div>
+        <div class="fi"><div class="fc">✓</div><p>You want your Kajabi business to look as good as the work you do inside it</p></div>
+        <div class="fi"><div class="fc">✓</div><p>You're tired of paying through the nose for freelancers — or doing it all yourself</p></div>
+        <div class="fi"><div class="fc">✓</div><p>You want a real working partner who knows Kajabi inside and out</p></div>
+      </div>
+      <div class="nfb">
+        <h4>This isn't for you if…</h4>
+        <p>You don't have anything specific you want built, or you're looking for a passive membership to join and forget about. We want people who are ready to use this.</p>
+      </div>
+    </div>
+    <div class="fimgs">
+      <div class="fim w"><img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698eb61824813c4b3600e765.jpg" alt="Results"></div>
+      <div class="fim"><img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698eb5bb24813c642900ae9b.jpg" alt="Build example"></div>
+      <div class="fim"><img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698eb5ce24813c006300b2e3.jpg" alt="Build example 2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT'S NOT -->
+<section class="not">
+  <div class="two">
+    <div class="nimg">
+      <img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/699c3e699598d21ff2dd82e9.jpg" alt="Meg Burrage">
+    </div>
+    <div>
+      <div class="lbl">Important</div>
+      <h2>This is <em>execution.</em> Full stop.</h2>
+      <p class="blg">SaaSy Momentum is not a coaching program. It's not a strategy service. You won't get advice on what to build, feedback on your offer, or recommendations on your business direction. That's not what this is.</p>
+      <br>
+      <p class="blg">What you need is someone to take the thing that's <strong>already in your head</strong> and make it real inside Kajabi. Come with a vision. You don't need to know how — that's our job. You just need to know what.</p>
+      <div class="ng">
+        <div class="ni"><span class="nx">✕</span><p><strong>No strategy calls</strong> before we start</p></div>
+        <div class="ni"><span class="nx">✕</span><p><strong>No "what should I build?"</strong> emails</p></div>
+        <div class="ni"><span class="nx">✕</span><p><strong>No feedback requests</strong> or business advice</p></div>
+        <div class="ni"><span class="nx">✕</span><p><strong>No back-and-forth</strong> before we build</p></div>
+      </div>
+      <div class="cr">
+        <a href="#apply" class="btn-p">Grab Your Spot →</a>
+        <a href="#chat" class="btn-s">Chat with Meg</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="lbl">FAQ</div>
+  <h2>A few things people ask <em>before</em> joining.</h2>
+  <div class="fg">
+    <div class="fq"><h4>How does the submission process work?</h4><p>Fill out our simple Google Doc template — we give you this on onboarding. Drop it in, it goes into the queue, and we take it from there. No calls required.</p></div>
+    <div class="fq"><h4>Small task vs. larger build — what's the difference?</h4><p>Small tasks (page edits, email tweaks, template installs) move quickly. Larger builds (full funnels, course setups, membership builds, automations) have a 21-day turnaround.</p></div>
+    <div class="fq"><h4>Is there a limit on how much I can submit?</h4><p>No monthly cap, no overage fees. Submit as much as you need — it works through the queue in order.</p></div>
+    <div class="fq"><h4>Do unfinished builds roll over?</h4><p>Work in progress always carries over. We don't drop anything. The queue just keeps moving.</p></div>
+    <div class="fq"><h4>Do I have to commit to 12 months?</h4><p>Not at all. Cancel anytime, no penalties. We're the ones committed to the year — not you.</p></div>
+    <div class="fq"><h4>What Kajabi plan do I need?</h4><p>Any Kajabi plan works. We build inside whatever you've already got.</p></div>
+    <div class="fq"><h4>Is this really only 10 spots?</h4><p>Yes. 10 members, full attention, no exceptions. No application — just first in, best dressed.</p></div>
+    <div class="fq"><h4>I have more questions.</h4><p>Hit the chat button. Meg's there — genuinely. No bots, no waiting room.</p></div>
+  </div>
+</section>
+
+<!-- CLOSE -->
+<section class="cls">
+  <div class="clbg"><img src="https://assets.cdn.filesafe.space/Ct2LfmFO04COz2YbzGPl/media/698af2fa67d7493b9f3d8880.png" alt=""></div>
+  <div class="cli">
+    <h2>10 spots.<br>$497/month.<br><em>Time to GSD.</em></h2>
+    <p>You already know what you want to build this year. The question is how long it's going to take you to get there if the building stays on your plate. Drop us a Google Doc. We build the thing. No cap, no limit, no agency markup.</p>
+    <div class="clctas">
+      <a href="#apply" class="btn-p">Grab Your Spot →</a>
+      <a href="#chat" class="btn-s">Not ready? Chat with Meg first</a>
+    </div>
+    <div class="clmeta">SaaSy Funnels by Meg Burrage · Committed to a full year. Are you in?</div>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo">
+    <div class="fm">S</div>
+    <span>SaaSy Funnels by Meg Burrage</span>
+  </div>
+  <p class="footer-links">Unsubscribe · Privacy · Terms</p>
+</footer>
+
+</body>
+</html>
